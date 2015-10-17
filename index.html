@@ -8,6 +8,25 @@
   </head>
   <body ng-controller="TravelController">
     <h1>{{title}}</h1>
+    <button type="button" class="btn btn-primary" ng-click="addTour()">Добавить тур</button>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Название</th>
+          <th>Страна</th>
+          <th>Описание</th>
+          <th>Цена</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="tour in tours">
+          <td>{{tour.title}}</td>
+          <td>{{tour.country}}</td>
+          <td>{{tour.text}}</td>
+          <td>{{tour.price}}</td>
+        </tr>
+     </tbody>
+    </table>
     <script type="text/javascript" src="app.js"></script>
   </body>
 </html>
