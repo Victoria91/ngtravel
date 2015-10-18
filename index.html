@@ -34,14 +34,45 @@
           <th>Страна</th>
           <th>Описание</th>
           <th>Цена</th>
+          <th>Действия</th>
         </tr>
       </thead>
-      <tbody>
-        <tr ng-repeat="tour in tours">
+      <tbody ng-repeat="tour in tours">
+        <tr ng-hide="tour.show_edit_form">
           <td>{{tour.title}}</td>
           <td>{{tour.country}}</td>
           <td>{{tour.text}}</td>
           <td>{{tour.price}}</td>
+          <td>
+            <button type="button" class="btn btn-xs btn-info" ng-click="edit(tour);">Редактировать</button>
+            <button type="button" class="btn btn-xs btn-danger">Удалить</button>
+          </td>
+        </tr>
+        <tr ng-show="tour.show_edit_form">
+          <form>
+            <td>
+              <div class="form-group">
+                <input type="text" class="form-control" ng-model="tour.title" />
+              </div>
+            </td>
+            <td>
+              <div class="form-group">
+                <input type="text" class="form-control" ng-model="tour.country" />
+              </div>
+            </td>
+            <td>
+              <div class="form-group">
+                <input type="text" class="form-control" ng-model="tour.text" />
+              </div>
+            </td>
+            <td>
+              <div class="form-group">
+                <input type="text" class="form-control" ng-model="tour.price" />
+              </div>
+            </td>
+            <td>
+            </td>
+          </form>
         </tr>
      </tbody>
     </table>

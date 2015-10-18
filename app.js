@@ -22,5 +22,9 @@ app.controller('TravelController', function($scope){
 
   $scope.addTour = function(){
     $scope.tours.push(angular.copy($scope.newTour));
+  };
+
+  $scope.edit = function(tour){
+    tour.show_edit_form = true;
   }
 });
