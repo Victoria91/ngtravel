@@ -29,6 +29,10 @@ app.controller('TravelController', function($scope){
     tour.show_edit_form = true;
   };
 
+  $scope.done_with_edit = function(tour){
+    tour.show_edit_form = false;
+  };
+
   $scope.show_form_for_new = function(){
     $scope.show_form = true;
   };
