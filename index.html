@@ -8,7 +8,7 @@
   </head>
   <body ng-controller="TravelController" style="padding:40px;">
     <h1>{{title}}</h1>
-    <button ng-hide="show_form" type="button" class="btn btn-primary" ng-click="show_form_for_new()">Добавить тур</button>
+    <button ng-hide="show_form" type="button" class="btn btn-primary" ng-click="showFormForNew()">Добавить тур</button>
     <div ng-show="show_form">
       <form>
         <div class="form-group col-md-4">
@@ -34,7 +34,7 @@
       </form>
       <div class="pull-right">
         <button type="button" class="btn btn-info" ng-click="addTour()">Сохранить</button>
-        <button type="button" class="btn btn-default" ng-click="cancel_adding()">Отмена</button>
+        <button type="button" class="btn btn-default" ng-click="hideFormForNew()">Отмена</button>
       </div>
     </div>
     <table class="table table-hover">
@@ -82,8 +82,8 @@
               </div>
             </td>
             <td>
-              <button type="button" class="btn btn-xs btn-info" ng-click="done_with_edit(tour)">Сохранить</button>
-              <button type="button" class="btn btn-xs btn-default" ng-click="done_with_edit(tour)">Отмена</button>
+              <button type="button" class="btn btn-xs btn-info" ng-click="hideEditForm(tour)">Сохранить</button>
+              <button type="button" class="btn btn-xs btn-default" ng-click="hideEditForm(tour)">Отмена</button>
             </td>
           </form>
         </tr>

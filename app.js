@@ -22,22 +22,22 @@ app.controller('TravelController', function($scope){
 
   $scope.addTour = function(){
     $scope.tours.push(angular.copy($scope.newTour));
-    $scope.cancel_adding();
+    $scope.hideFormForNew();
   };
 
   $scope.edit = function(tour){
     tour.show_edit_form = true;
   };
 
-  $scope.done_with_edit = function(tour){
+  $scope.hideEditForm = function(tour){
     tour.show_edit_form = false;
   };
 
-  $scope.show_form_for_new = function(){
+  $scope.showFormForNew = function(){
     $scope.show_form = true;
   };
 
-  $scope.cancel_adding = function(){
+  $scope.hideFormForNew = function(){
     $scope.show_form = false;
   };
 
