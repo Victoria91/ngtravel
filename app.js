@@ -1,4 +1,11 @@
-angular.module('Travel',[]);
+angular.module('Travel', ['ngRoute'])
+.config(function($routeProvider, $locationProvider) {
+  $routeProvider
+	.when('/',{
+		templateUrl: "list.html",
+		controller: 'TravelController'
+	});
+});
 
 var allTours = [
   {
