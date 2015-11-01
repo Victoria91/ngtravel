@@ -1,4 +1,5 @@
 <h1>{{title}}</h1>
+<div class="pull-right"><a ng-href="/countries">Перейти к списку стран</a></div>
 <button ng-hide="show_form" type="button" class="btn btn-primary" ng-click="showFormForNew()">Добавить тур</button>
 <div ng-show="show_form">
 <form>
@@ -8,7 +9,9 @@
 </div>
 <div class="form-group col-md-4">
   <label>Страна:</label>
-  <input type="text" class="form-control" ng-model="newTour.country" />
+  <select class="form-control" ng-model="newTour.country">
+    <option ng-repeat="country in tourCountries">{{country.name}}</option>
+  </select>
 </div>
 <div class="form-group col-md-4">
   <label for="exampleInputAmount">Цена (в долларах)</label>
@@ -29,54 +32,55 @@
 </div>
 </div>
 <table class="table table-hover">
-<thead>
-<tr>
-  <th>Название</th>
-  <th>Страна</th>
-  <th>Описание</th>
-  <th>Цена</th>
-</tr>
-</thead>
-<tbody ng-repeat="tour in tours">
-<tr ng-hide="tour.show_edit_form">
-  <td>{{tour.title}}</td>
-  <td>{{tour.country}}</td>
-  <td>{{tour.text}}</td>
-  <td>{{tour.price}}</td>
-</tr>
-<tr ng-hide="tour.show_edit_form">
-  <td colspan="4">
-    <button type="button" class="btn btn-xs btn-info" ng-click="edit(tour)">Редактировать</button>
-    <button type="button" class="btn btn-xs btn-danger" ng-click="delete(tour)">Удалить</button>
-  </td>
-</tr>
-<tr ng-show="tour.show_edit_form">
-  <form>
-    <td>
-      <div class="form-group">
-        <input type="text" class="form-control" ng-model="tour.title" />
-      </div>
-    </td>
-    <td>
-      <div class="form-group">
-        <input type="text" class="form-control" ng-model="tour.country" />
-      </div>
-    </td>
-    <td>
-      <div class="form-group">
-        <input type="text" class="form-control" ng-model="tour.text" />
-      </div>
-    </td>
-    <td>
-      <div class="form-group">
-        <input type="text" class="form-control" ng-model="tour.price" />
-      </div>
-    </td>
-    <td>
-      <button type="button" class="btn btn-xs btn-info" ng-click="hideEditForm(tour)">Сохранить</button>
-      <button type="button" class="btn btn-xs btn-default" ng-click="hideEditForm(tour)">Отмена</button>
-    </td>
-  </form>
-</tr>
-</tbody>
+  <thead>
+    <tr>
+      <th>Название</th>
+      <th>Страна</th>
+      <th>Описание</th>
+      <th>Цена</th>
+    </tr>
+  </thead>
+  <tbody ng-repeat="tour in tours">
+    <tr ng-hide="tour.show_edit_form">
+      <td><a ng-href="/tours/{{tour.slug}}">{{tour.title}}</a></td>
+      <td>{{tour.country}}</td>
+      <td>{{tour.text}}</td>
+      <td>{{tour.price}}</td>
+    </tr>
+    <tr ng-hide="tour.show_edit_form">
+      <td colspan="4">
+        <button type="button" class="btn btn-xs btn-info" ng-click="edit(tour)">Редактировать</button>
+        <button type="button" class="btn btn-xs btn-danger" ng-click="delete(tour)">Удалить</button>
+      </td>
+    </tr>
+    <tr ng-show="tour.show_edit_form">
+      <form>
+        <td>
+          <div class="form-group">
+            <input type="text" class="form-control" ng-model="tour.title" />
+          </div>
+        </td>
+        <td>
+          <select class="form-control" ng-model="newTour.country">
+            <option ng-repeat="country in tourCountries" ng-selected="country.name==tour.country">{{country.name}}</option>
+          </select>
+        </td>
+        <td>
+          <div class="form-group">
+            <input type="text" class="form-control" ng-model="tour.text" />
+          </div>
+        </td>
+        <td>
+          <div class="form-group">
+            <input type="text" class="form-control" ng-model="tour.price" />
+          </div>
+        </td>
+        <td>
+          <button type="button" class="btn btn-xs btn-info" ng-click="hideEditForm(tour)">Сохранить</button>
+          <button type="button" class="btn btn-xs btn-default" ng-click="hideEditForm(tour)">Отмена</button>
+        </td>
+      </form>
+    </tr>
+  </tbody>
 </table>
+<button class="btn btn-success" ng-click="pickMount()">Мне повезет!</button>

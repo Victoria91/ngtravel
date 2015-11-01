@@ -1,4 +1,4 @@
-angular.module('Travel').controller('TravelController', function($scope){
+angular.module('Travel').controller('ToursController', function($scope, $location){
   $scope.title = 'Путешествия';
 
   $scope.tours = allTours;
@@ -28,5 +28,11 @@ angular.module('Travel').controller('TravelController', function($scope){
 
   $scope.delete = function(tour){
     $scope.tours.splice($scope.tours.indexOf(tour),1);
-  }
+  };
+
+  $scope.pickMount = function(){
+    $location.path('/tours/sochi');
+  };
+
+  $scope.tourCountries = countries;
 });
