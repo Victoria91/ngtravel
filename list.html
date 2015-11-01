@@ -3,8 +3,8 @@
 <form class="form-inline">
   <div class="form-group">
     <label>Фильтр по стране:</label>
-    <select class="form-control" ng-model="newTour.country">
-      <option ng-repeat="country in tourCountries" ng-selected="country.name==tour.country">{{country.name}}</option>
+    <select class="form-control" ng-model="current_country" ng-change="setCountry(current_country)">
+      <option ng-repeat="country in tourCountries">{{country.name}}</option>
     </select> 
   </div>
 </form>

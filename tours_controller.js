@@ -9,4 +9,11 @@ angular.module('Travel').controller('ToursController', function($scope, $locatio
     $location.path('/admin/tours/sochi');
   };
 
+  $scope.setCountry = function(country){
+    $scope.tours = [];
+    angular.forEach(allTours, function(tour){
+      if (tour.country == country)
+        $scope.tours.push(tour);
+    });
+  }
 });
