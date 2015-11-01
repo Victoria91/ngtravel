@@ -1,4 +1,4 @@
-angular.module('Travel').controller('CountriesController', function($scope) {
+angular.module('Travel').controller('AdminCountriesController', function($scope) {
 	$scope.title = 'Список стран';
 
 	$scope.countries = countries;
@@ -12,9 +12,9 @@ angular.module('Travel').controller('CountriesController', function($scope) {
 
 	$scope.showEditForm = function(country) {
 		country.edit = true;
-	}
+	};
 
 	$scope.hideEditForm = function(country) {
 		country.edit = false;
-	}
+	};
 });

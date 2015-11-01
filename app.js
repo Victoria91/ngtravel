@@ -2,8 +2,8 @@ angular.module('Travel', ['ngRoute'])
 .config(function($routeProvider, $locationProvider) {
   $routeProvider
 	.when('/',{
-		templateUrl: 'list.html',
-		controller: 'ToursController',
+		templateUrl: 'admin_list.html',
+		controller: 'AdminToursController',
     publicAccess: true,
     resolve: {
       currentUser: function(){
@@ -11,15 +11,20 @@ angular.module('Travel', ['ngRoute'])
       }
     }
 	})
-  .when('/tours/:slug',{
+  .when('/admin/tours/:slug',{
     templateUrl: 'item.html',
-    controller: 'TourController',
+    controller: 'AdminTourController',
     publicAccess: false
   })
-  .when('/countries', {
+  .when('/admin/countries', {
     templateUrl: 'countries.html',
-    controller: 'CountriesController',
+    controller: 'AdminCountriesController',
     publicAccess: false
+  })
+  .when('/tours', {
+    templateUrl: 'list.html',
+    controller: 'ToursController',
+    publicAccess: true
   })
   .otherwise({
     redirectTo: '/'
@@ -29,7 +34,7 @@ angular.module('Travel', ['ngRoute'])
 }).run(function($rootScope, $route, $location){
   $rootScope.$on('$locationChangeStart', function(event, next, current){
     var nextPath = $location.path();
-    var nextRoute = $route.routes[nextPath] || $route.routes['/tours/:slug'];
+    var nextRoute = $route.routes[nextPath] || $route.routes['/admin/tours/:slug'];
 
     if(!nextRoute.publicAccess) {
       // alert('Access denied!');
