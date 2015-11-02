@@ -1,0 +1,15 @@
+<!doctype html>
+<html ng-app="Travel">
+  <head>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.min.js"></script>
+    <title>{{title}}</title>
+  </head>
+  <body ng-controller="TravelController" style="padding:40px;">
+    <ng-view></ng-view>
+	<script src="https://code.angularjs.org/1.4.4/angular-route.js"></script>
+    <script type="text/javascript" src="app.js"></script>
+    <script type="text/javascript" src="tours_controller.js"></script>
+  </body>
+</html>
