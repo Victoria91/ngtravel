@@ -1,9 +1,5 @@
-angular.module('Travel').controller('ToursController', function($scope, $location){
+angular.module('Travel').controller('ToursController', function($scope, $location, $http){
   $scope.title = 'Путешествия';
-
-  $scope.tours = allTours;
-
-  $scope.tourCountries = countries;
 
   $scope.randomTour = function(){
     $location.path('/admin/tours/sochi');
@@ -16,4 +12,16 @@ angular.module('Travel').controller('ToursController', function($scope, $locatio
         $scope.tours.push(tour);
     });
   }
+
+  $http({
+    method: 'GET',
+    url: 'https://api.parse.com/1/classes/Tour',
+    headers: {
+      "X-Parse-Application-Id": "GCRvE8tIzX5u7NExe6gvOaXKAxVeBfp99cnWwoMR",
+      "X-Parse-REST-API-Key": "wY1jN4llMFzWLVaTVj8pbCHXKOdl1obSgcJNjX26"
+    }
+  }).then(function(response){
+    console.log(response);
+    $scope.tours = response.data.results;
+  });
 });
