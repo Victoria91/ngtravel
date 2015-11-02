@@ -1,0 +1,30 @@
+<h1>{{title}}</h1>
+
+<form class="form-inline">
+  <div class="form-group">
+    <label>Фильтр по стране:</label>
+    <select class="form-control" ng-model="current_country" ng-change="setCountry(current_country)">
+      <option ng-repeat="country in tourCountries">{{country.name}}</option>
+    </select> 
+  </div>
+</form>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Название</th>
+      <th>Страна</th>
+      <th>Описание</th>
+      <th>Цена</th>
+    </tr>
+  </thead>
+  <tbody ng-repeat="tour in tours">
+    <tr ng-hide="tour.show_edit_form">
+      <td><a ng-href="/admin/tours/{{tour.slug}}">{{tour.title}}</a></td>
+      <td>{{tour.country}}</td>
+      <td>{{tour.text}}</td>
+      <td>{{tour.price}}</td>
+    </tr>
+  </tbody>
+</table>
+<button class="btn btn-success" ng-click="randomTour()">Мне повезет!</button>
