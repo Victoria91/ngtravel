@@ -1,5 +1,5 @@
-angular.module('Travel', ['ngRoute'])
-.config(function($routeProvider, $locationProvider) {
+angular.module('Travel', ['ngRoute', 'ngResource'])
+.config(function($routeProvider, $locationProvider, $httpProvider) {
   $routeProvider
 	.when('/',{
 		templateUrl: 'admin_list.html',
@@ -11,7 +11,7 @@ angular.module('Travel', ['ngRoute'])
       }
     }
 	})
-  .when('/admin/tours/:slug',{
+  .when('/admin/tours/:id',{
     templateUrl: 'item.html',
     controller: 'AdminTourController',
     publicAccess: false
@@ -31,32 +31,10 @@ angular.module('Travel', ['ngRoute'])
   });
 
   $locationProvider.html5Mode(true);
+
+  $httpProvider.defaults.headers.common = {
+    "X-Parse-Application-Id": "GCRvE8tIzX5u7NExe6gvOaXKAxVeBfp99cnWwoMR",
+    "X-Parse-REST-API-Key": "wY1jN4llMFzWLVaTVj8pbCHXKOdl1obSgcJNjX26"
+  }
+
 });
-
-var allTours = [
-  {
-    title: 'Гостевой дом Лазурь 3*',
-    country: 'Россия',
-    text: 'Краснодарский край, Сочи. 3-я пляжная линиягалечный пляжбесплатный wi-fi в номерепостроен в 2002 году13 номеров',
-    price: 24864,
-    slug: 'sochi'
-  },
-  {
-    title: 'Sevilla Palace 4*',
-    country: 'Мексика',
-    text: 'Федеральный округ, Мехико. бесплатный wi-fi в номерепостроен в 1988 году, 413 номеров, 23 этажа, лифт',
-    price: 236252,
-    slug: 'mexico'
-  }
-];
-
-var countries = [
-  {
-    name: 'Россия',
-    code: 'rus'
-  },
-  {
-    name: 'Мексика',
-    code: 'mex'
-  }
-]

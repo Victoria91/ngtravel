@@ -1,13 +1,24 @@
-angular.module('Travel').controller('AdminToursController', function($scope, $location){
+angular.module('Travel').controller('AdminToursController', function($scope, $location, $resource){
   $scope.title = 'Путешествия';
 
-  $scope.tours = allTours;
+  var Tour = $resource('https://api.parse.com/1/classes/Tour/:objectId', 
+                        {objectId: '@objectId'},
+                        {query: {isArray: true, transformResponse: parseResults}});
+  $scope.tours = Tour.query();
 
   $scope.newTour = { title: null, country: null, text: null, price: null };
 
   $scope.addTour = function(){
-    $scope.tours.push(angular.copy($scope.newTour));
-    $scope.hideFormForNew();
+    var tourToServer = new Tour($scope.newTour);
+    tourToServer.$save().then(
+      function(tour){
+        console.log(tour);
+        var tourFromServer = angular.extend(tour, $scope.newTour);
+        $scope.newTour = {};
+        $scope.tours.push(tourFromServer);
+        $scope.hideFormForNew();
+      }
+    );
   };
 
   $scope.edit = function(tour){
@@ -27,8 +38,16 @@ angular.module('Travel').controller('AdminToursController', function($scope, $lo
   };
 
   $scope.delete = function(tour){
-    $scope.tours.splice($scope.tours.indexOf(tour),1);
+    var tourForDelete = Tour.get({objectId: tour.objectId});
+    tourForDelete.$delete({objectId: tour.objectId}).then(
+      function(tour){
+        $scope.tours.splice($scope.tours.indexOf(tourForDelete),1);
+      }
+    );
   };
 
-  $scope.tourCountries = countries;
+  function parseResults(data, headersGetter){
+    data = angular.fromJson(data);
+    return data.results;
+  }
 });

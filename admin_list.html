@@ -17,7 +17,7 @@
   <label for="exampleInputAmount">Цена (в долларах)</label>
   <div class="input-group">
     <div class="input-group-addon">&#8381;</div>
-    <input type="text" class="form-control" ng-model="newTour.price" placeholder="Стоимость">
+    <input type="number" class="form-control" ng-model="newTour.price" placeholder="Стоимость">
     <div class="input-group-addon">.00</div>
   </div>
 </div>
@@ -42,7 +42,7 @@
   </thead>
   <tbody ng-repeat="tour in tours">
     <tr ng-hide="tour.show_edit_form">
-      <td><a ng-href="/admin/tours/{{tour.slug}}">{{tour.title}}</a></td>
+      <td><a ng-href="/admin/tours/{{tour.objectId}}">{{tour.title}}</a></td>
       <td>{{tour.country}}</td>
       <td>{{tour.text}}</td>
       <td>{{tour.price}}</td>

@@ -21,7 +21,17 @@ angular.module('Travel').controller('ToursController', function($scope, $locatio
       "X-Parse-REST-API-Key": "wY1jN4llMFzWLVaTVj8pbCHXKOdl1obSgcJNjX26"
     }
   }).then(function(response){
-    console.log(response);
     $scope.tours = response.data.results;
+  });
+
+  $http({
+    method: 'GET',
+    url: 'https://api.parse.com/1/classes/Country',
+    headers: {
+      "X-Parse-Application-Id": "GCRvE8tIzX5u7NExe6gvOaXKAxVeBfp99cnWwoMR",
+      "X-Parse-REST-API-Key": "wY1jN4llMFzWLVaTVj8pbCHXKOdl1obSgcJNjX26"
+    }
+  }).then(function(response){
+    $scope.tourCountries = response.data.results;
   });
 });
