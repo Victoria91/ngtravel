@@ -4,7 +4,7 @@
   <div class="form-group">
     <label>Фильтр по стране:</label>
     <select class="form-control" ng-model="current_country" ng-change="setCountry(current_country)">
-      <option ng-repeat="country in tourCountries">{{country.name}}</option>
+      <option ng-repeat="country in tourCountries" value={{country.objectId}}>{{country.name}}</option>
     </select> 
   </div>
 </form>
@@ -18,10 +18,10 @@
       <th>Цена</th>
     </tr>
   </thead>
-  <tbody ng-repeat="tour in tours">
+  <tbody ng-repeat="tour in tours | filter: { country_id: { objectId: current_country } }">
     <tr ng-hide="tour.show_edit_form">
       <td><a ng-href="/admin/tours/{{tour.slug}}">{{tour.title}}</a></td>
-      <td>{{tour.country}}</td>
+      <td>{{tour.country_id}}</td>
       <td>{{tour.text}}</td>
       <td>{{tour.price}}</td>
     </tr>
