@@ -1,37 +1,28 @@
-angular.module('Travel').controller('ToursController', function($scope, $location, $http){
+angular.module('Travel').controller('ToursController', function($scope, $location, $resource){
   $scope.title = 'Путешествия';
+
+	var Tour = $resource('https://api.parse.com/1/classes/Tour/:objectId', 
+												{objectId: '@objectId', include: 'country'},
+												{query: {isArray: true, transformResponse: parseResults}});
+
+	var Country = $resource('https://api.parse.com/1/classes/Country/:objectId', 
+												{objectId: '@objectId'},
+												{query: {isArray: true, transformResponse: parseResults}});
+
+	$scope.tourCountries = Country.query();
+	$scope.tours = Tour.query();
+
 
   $scope.randomTour = function(){
     $location.path('/admin/tours/sochi');
   };
 
-  $scope.setCountry = function(country){
-    $scope.tours = [];
-    angular.forEach(allTours, function(tour){
-      if (tour.country == country)
-        $scope.tours.push(tour);
-    });
+	$scope.tourCountry = function(tour){
+		Country.get({objectId: tour.country_id}).name;
+	}
+
+	function parseResults(data, headersGetter){
+    data = angular.fromJson(data);
+    return data.results;
   }
-
-  $http({
-    method: 'GET',
-    url: 'https://api.parse.com/1/classes/Tour',
-    headers: {
-      "X-Parse-Application-Id": "GCRvE8tIzX5u7NExe6gvOaXKAxVeBfp99cnWwoMR",
-      "X-Parse-REST-API-Key": "wY1jN4llMFzWLVaTVj8pbCHXKOdl1obSgcJNjX26"
-    }
-  }).then(function(response){
-    $scope.tours = response.data.results;
-  });
-
-  $http({
-    method: 'GET',
-    url: 'https://api.parse.com/1/classes/Country',
-    headers: {
-      "X-Parse-Application-Id": "GCRvE8tIzX5u7NExe6gvOaXKAxVeBfp99cnWwoMR",
-      "X-Parse-REST-API-Key": "wY1jN4llMFzWLVaTVj8pbCHXKOdl1obSgcJNjX26"
-    }
-  }).then(function(response){
-    $scope.tourCountries = response.data.results;
-  });
 });
