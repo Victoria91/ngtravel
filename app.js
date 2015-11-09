@@ -38,3 +38,8 @@ angular.module('Travel', ['ngRoute', 'ngResource'])
   }
 
 });
+
+function parseResults(data, headersGetter){
+  data = angular.fromJson(data);
+  return data.results;
+}

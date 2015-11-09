@@ -4,16 +4,23 @@ angular.module('Travel').controller('AdminToursController', function($scope, $lo
   var Tour = $resource('https://api.parse.com/1/classes/Tour/:objectId', 
                         {objectId: '@objectId'},
                         {query: {isArray: true, transformResponse: parseResults}});
+  var Country = $resource('https://api.parse.com/1/classes/Country/:objectId', 
+                        {objectId: '@objectId'},
+                        {query: {isArray: true, transformResponse: parseResults}});
+
+  $scope.tourCountries = Country.query();
   $scope.tours = Tour.query();
 
-  $scope.newTour = { title: null, country: null, text: null, price: null };
+  $scope.newTour = { title: null, country_id: null, text: null, price: null };
 
   $scope.addTour = function(){
     var tourToServer = new Tour($scope.newTour);
+    tourToServer.country_id = { __type: "Pointer", className: "Country", objectId: tourToServer.country_id };
+    // console.log(tourToServer);
     tourToServer.$save().then(
       function(tour){
-        console.log(tour);
-        var tourFromServer = angular.extend(tour, $scope.newTour);
+        var tourFromServer = angular.extend(tour,tourToServer);
+        // console.log(tourFromServer);
         $scope.newTour = {};
         $scope.tours.push(tourFromServer);
         $scope.hideFormForNew();
@@ -45,6 +52,20 @@ angular.module('Travel').controller('AdminToursController', function($scope, $lo
       }
     );
   };
+
+  $scope.tourCountry = function(tour){
+    console.log('llll');
+    console.log(tour.country_id);
+    if (!tour.country_id) {
+      return ''
+    } else {
+      country = $scope.tourCountries.find(function(country){
+        return country.objectId == tour.country_id.objectId;
+      });
+      // console.log(country);
+      return country.name;
+    }
+  }
 
   function parseResults(data, headersGetter){
     data = angular.fromJson(data);

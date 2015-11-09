@@ -9,8 +9,7 @@
 </div>
 <div class="form-group col-md-4">
   <label>Страна:</label>
-  <select class="form-control" ng-model="newTour.country">
-    <option ng-repeat="country in tourCountries">{{country.name}}</option>
+  <select class="form-control" type="number" ng-model="newTour.country_id" ng-options="country.objectId as country.name for country in tourCountries track by country.objectId">
   </select>
 </div>
 <div class="form-group col-md-4">
@@ -43,7 +42,7 @@
   <tbody ng-repeat="tour in tours">
     <tr ng-hide="tour.show_edit_form">
       <td><a ng-href="/admin/tours/{{tour.objectId}}">{{tour.title}}</a></td>
-      <td>{{tour.country}}</td>
+      <td>{{tourCountry(tour)}}</td>
       <td>{{tour.text}}</td>
       <td>{{tour.price}}</td>
     </tr>
