@@ -60,8 +60,8 @@
           </div>
         </td>
         <td>
-          <select class="form-control" ng-model="newTour.country">
-            <option ng-repeat="country in tourCountries" ng-selected="country.name==tour.country">{{country.name}}</option>
+          <select class="form-control" ng-model="tour.country_id" ng-options="country.objectId as country.name for country in tourCountries track by country.objectId">
+
           </select>
         </td>
         <td>
@@ -75,8 +75,8 @@
           </div>
         </td>
         <td>
-          <button type="button" class="btn btn-xs btn-info" ng-click="hideEditForm(tour)">Сохранить</button>
-          <button type="button" class="btn btn-xs btn-default" ng-click="hideEditForm(tour)">Отмена</button>
+          <button type="button" class="btn btn-xs btn-info" ng-click="update(tour)">Сохранить</button>
+          <button type="button" class="btn btn-xs btn-default" ng-click="cancelEdit(tour)">Отмена</button>
         </td>
       </form>
     </tr>

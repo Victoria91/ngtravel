@@ -1,10 +1,14 @@
 angular.module('Travel').controller('AdminToursController', function($scope, $location, $resource){
   $scope.title = 'Путешествия';
 
-  var Tour = $resource('https://api.parse.com/1/classes/Tour/:objectId', 
+  var Tour = $resource('https://api.parse.com/1/classes/Tour/:objectId',
                         {objectId: '@objectId'},
-                        {query: {isArray: true, transformResponse: parseResults}});
-  var Country = $resource('https://api.parse.com/1/classes/Country/:objectId', 
+                        {
+													query: {isArray: true, transformResponse: parseResults},
+ 													update: { method:'PUT' }
+												});
+
+  var Country = $resource('https://api.parse.com/1/classes/Country/:objectId',
                         {objectId: '@objectId'},
                         {query: {isArray: true, transformResponse: parseResults}});
 
@@ -16,11 +20,9 @@ angular.module('Travel').controller('AdminToursController', function($scope, $lo
   $scope.addTour = function(){
     var tourToServer = new Tour($scope.newTour);
     tourToServer.country_id = { __type: "Pointer", className: "Country", objectId: tourToServer.country_id };
-    // console.log(tourToServer);
     tourToServer.$save().then(
       function(tour){
-        var tourFromServer = angular.extend(tour,tourToServer);
-        // console.log(tourFromServer);
+        var tourFromServer = angular.extend(tour, $scope.newTour);
         $scope.newTour = {};
         $scope.tours.push(tourFromServer);
         $scope.hideFormForNew();
@@ -54,21 +56,23 @@ angular.module('Travel').controller('AdminToursController', function($scope, $lo
   };
 
   $scope.tourCountry = function(tour){
-    console.log('llll');
-    console.log(tour.country_id);
     if (!tour.country_id) {
       return ''
     } else {
       country = $scope.tourCountries.find(function(country){
         return country.objectId == tour.country_id.objectId;
       });
-      // console.log(country);
       return country.name;
     }
-  }
+  };
 
-  function parseResults(data, headersGetter){
-    data = angular.fromJson(data);
-    return data.results;
-  }
+	$scope.update = function(tour){
+		Tour.update(tour);
+		$scope.hideEditForm(tour);
+	};
+
+	$scope.cancelEdit = function(tour){
+		$scope.tours[$scope.tours.indexOf(tour)] = Tour.get({objectId: tour.objectId});
+ 		$scope.hideEditForm(tour);
+	};
 });
