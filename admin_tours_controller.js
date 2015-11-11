@@ -19,7 +19,7 @@ angular.module('Travel').controller('AdminToursController', function($scope, $lo
 
   $scope.addTour = function(){
     var tourToServer = new Tour($scope.newTour);
-    tourToServer.country_id = { __type: "Pointer", className: "Country", objectId: tourToServer.country_id };
+    tourToServer.country_id = angular.extend($scope.newTour.country_id, { __type: "Pointer", className: "Country"});
     tourToServer.$save().then(
       function(tour){
         var tourFromServer = angular.extend(tour, $scope.newTour);
