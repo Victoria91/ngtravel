@@ -14,6 +14,7 @@
     <tr>
       <th>Название</th>
       <th>Страна</th>
+      <th>Продолжительность</th>
       <th>Описание</th>
       <th>Цена</th>
     </tr>
@@ -22,6 +23,7 @@
     <tr ng-hide="tour.show_edit_form">
       <td><a ng-href="/admin/tours/{{tour.slug}}">{{tour.title}}</a></td>
       <td>{{tourCountry(tour)}}</td>
+      <td>{{tour.length}}</td>
       <td>{{tour.text}}</td>
       <td>{{tour.price}}</td>
     </tr>

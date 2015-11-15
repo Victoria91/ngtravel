@@ -15,7 +15,7 @@ angular.module('Travel').controller('AdminToursController', function($scope, $lo
   $scope.tourCountries = Country.query();
   $scope.tours = Tour.query();
 
-  $scope.newTour = { title: null, country_id: null, text: null, price: null };
+  $scope.newTour = { title: null, country_id: null, text: null, price: null, length: 7 };
 
   $scope.addTour = function(){
     var tourToServer = new Tour($scope.newTour);
