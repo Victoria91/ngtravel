@@ -21,6 +21,11 @@ angular.module('Travel', ['ngRoute', 'ngResource'])
     controller: 'AdminCountriesController',
     publicAccess: false
   })
+  .when('/admin/places', {
+    templateUrl: 'places.html',
+    controller: 'AdminPlacesController',
+    publicAccess: false
+  })
   .when('/tours', {
     templateUrl: 'list.html',
     controller: 'ToursController',

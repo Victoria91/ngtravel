@@ -9,8 +9,13 @@ angular.module('Travel').controller('ToursController', function($scope, $locatio
 												{objectId: '@objectId'},
 												{query: {isArray: true, transformResponse: parseResults}});
 
+  var Place = $resource('https://api.parse.com/1/classes/Place/:objectId',
+                        {objectId: '@objectId'},
+                        {query: {isArray: true, transformResponse: parseResults}});
+
 	$scope.tourCountries = Country.query();
 	$scope.tours = Tour.query();
+  $scope.tourPlaces = Place.query();
 
   $scope.randomTour = function(){
     $location.path('/admin/tours/sochi');
@@ -25,7 +30,18 @@ angular.module('Travel').controller('ToursController', function($scope, $locatio
       });
       return country.name;
     }
-	}
+	};
+
+  $scope.tourPlace = function(tour){
+    if (!tour.placeId) {
+      return ''
+    } else {
+      place = $scope.tourPlaces.find(function(place){
+        return place.objectId == tour.placeId.objectId;
+      });
+      return place.name;
+    }
+  };
 
   $scope.filterByCountry = function(tour){
     if ($scope.currentCountry){
@@ -35,8 +51,12 @@ angular.module('Travel').controller('ToursController', function($scope, $locatio
     }
   }
 
-	function parseResults(data, headersGetter){
-    data = angular.fromJson(data);
-    return data.results;
-  }
+  $scope.filterByPlace = function(tour){
+    if ($scope.currentPlace){
+      return tour.placeId && tour.placeId.objectId == $scope.currentPlace
+    } else {
+      return true;
+    }
+  };
+
 });

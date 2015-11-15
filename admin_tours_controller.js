@@ -12,7 +12,12 @@ angular.module('Travel').controller('AdminToursController', function($scope, $lo
                         {objectId: '@objectId'},
                         {query: {isArray: true, transformResponse: parseResults}});
 
+  var Place = $resource('https://api.parse.com/1/classes/Place/:objectId',
+                        {objectId: '@objectId'},
+                        {query: {isArray: true, transformResponse: parseResults}});
+
   $scope.tourCountries = Country.query();
+  $scope.tourPlaces = Place.query();
   $scope.tours = Tour.query();
 
   $scope.newTour = { title: null, country_id: null, text: null, price: null, length: 7 };
@@ -20,6 +25,7 @@ angular.module('Travel').controller('AdminToursController', function($scope, $lo
   $scope.addTour = function(){
     var tourToServer = new Tour($scope.newTour);
     tourToServer.country_id = angular.extend($scope.newTour.country_id, { __type: "Pointer", className: "Country"});
+    tourToServer.placeId = angular.extend($scope.newTour.placeId, { __type: "Pointer", className: "Place"});
     tourToServer.$save().then(
       function(tour){
         var tourFromServer = angular.extend(tour, $scope.newTour);
@@ -31,11 +37,11 @@ angular.module('Travel').controller('AdminToursController', function($scope, $lo
   };
 
   $scope.edit = function(tour){
-    tour.show_edit_form = true;
+    tour.showEditForm = true;
   };
 
   $scope.hideEditForm = function(tour){
-    tour.show_edit_form = false;
+    tour.showEditForm = false;
   };
 
   $scope.showFormForNew = function(){
@@ -63,6 +69,17 @@ angular.module('Travel').controller('AdminToursController', function($scope, $lo
         return country.objectId == tour.country_id.objectId;
       });
       return country.name;
+    }
+  };
+
+  $scope.tourPlace = function(tour){
+    if (!tour.placeId) {
+      return ''
+    } else {
+      place = $scope.tourPlaces.find(function(place){
+        return place.objectId == tour.placeId.objectId;
+      });
+      return place.name;
     }
   };
 
