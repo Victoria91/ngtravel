@@ -4,9 +4,9 @@ angular.module('Travel').controller('AdminToursController', function($scope, $lo
   var Tour = $resource('https://api.parse.com/1/classes/Tour/:objectId',
                         {objectId: '@objectId'},
                         {
-													query: {isArray: true, transformResponse: parseResults},
- 													update: { method:'PUT' }
-												});
+                          query: {isArray: true, transformResponse: parseResults},
+                          update: { method:'PUT' }
+                        });
 
   var Country = $resource('https://api.parse.com/1/classes/Country/:objectId',
                         {objectId: '@objectId'},
@@ -83,13 +83,13 @@ angular.module('Travel').controller('AdminToursController', function($scope, $lo
     }
   };
 
-	$scope.update = function(tour){
-		Tour.update(tour);
-		$scope.hideEditForm(tour);
-	};
+  $scope.update = function(tour){
+    Tour.update(tour);
+    $scope.hideEditForm(tour);
+  };
 
-	$scope.cancelEdit = function(tour){
-		$scope.tours[$scope.tours.indexOf(tour)] = Tour.get({objectId: tour.objectId});
- 		$scope.hideEditForm(tour);
-	};
+  $scope.cancelEdit = function(tour){
+    $scope.tours[$scope.tours.indexOf(tour)] = Tour.get({objectId: tour.objectId});
+    $scope.hideEditForm(tour);
+  };
 });
