@@ -1,0 +1,21 @@
+<h1>{{title}}</h1>
+<form class="form-inline">
+	<div class="form-group">
+	  <label>Название:</label>
+	  <input type="text" class="form-control" ng-model="newPlace.name" />
+	</div>
+	<button type="submit" class="btn btn-default" ng-click="addPlace()">Добавить место</button>
+</form>
+<br>
+<div ng-repeat="place in places" title="Кликните, чтобы отредактировать" ng-click="showEditForm(place)">
+	<h4  ng-hide="place.edit">{{place.name}}</h4>
+	<form class="form-inline" ng-show="place.edit">
+		<div class="form-group">
+		  <input type="text" class="form-control" ng-model="place.name" />
+		</div>
+		<button type="submit" class="btn btn-primary" ng-click="update(place)">Сохранить</button>
+		<button type="submit" class="btn btn-danger" ng-click="delete(place)">Удалить</button>
+	</form>
+	<br>
+</div>
+<h4><a ng-href="/">Назад</a></h4>
