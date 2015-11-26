@@ -20,11 +20,11 @@ angular.module('Travel').controller('AdminToursController', function($scope, $lo
   $scope.tourPlaces = Place.query();
   $scope.tours = Tour.query();
 
-  $scope.newTour = { title: null, country_id: null, text: null, price: null, length: 7 };
+  $scope.newTour = { title: null, countryId: null, text: null, price: null, length: 7 };
 
   $scope.addTour = function(){
     var tourToServer = new Tour($scope.newTour);
-    tourToServer.country_id = angular.extend($scope.newTour.country_id, { __type: "Pointer", className: "Country"});
+    tourToServer.countryId = angular.extend($scope.newTour.countryId, { __type: "Pointer", className: "Country"});
     tourToServer.placeId = angular.extend($scope.newTour.placeId, { __type: "Pointer", className: "Place"});
     tourToServer.$save().then(
       function(tour){
@@ -62,11 +62,11 @@ angular.module('Travel').controller('AdminToursController', function($scope, $lo
   };
 
   $scope.tourCountry = function(tour){
-    if (!tour.country_id) {
+    if (!tour.countryId) {
       return ''
     } else {
       country = $scope.tourCountries.find(function(country){
-        return country.objectId == tour.country_id.objectId;
+        return country.objectId == tour.countryId.objectId;
       });
       return country.name;
     }

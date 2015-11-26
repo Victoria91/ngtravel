@@ -22,11 +22,11 @@ angular.module('Travel').controller('ToursController', function($scope, $locatio
   };
 
   $scope.tourCountry = function(tour){
-    if (!tour.country_id) {
+    if (!tour.countryId) {
       return ''
     } else {
       country = $scope.tourCountries.find(function(country){
-        return country.objectId == tour.country_id.objectId;
+        return country.objectId == tour.countryId.objectId;
       });
       return country.name;
     }
@@ -43,13 +43,13 @@ angular.module('Travel').controller('ToursController', function($scope, $locatio
     }
   };
 
-  $scope.filterByCountry = function(tour){
+  $scope.filterByCountry = function(object){
     if ($scope.currentCountry){
-      return tour.country_id && tour.country_id.objectId == $scope.currentCountry
+      return object.countryId && object.countryId.objectId == $scope.currentCountry
     } else {
       return true;
     }
-  }
+  };
 
   $scope.filterByPlace = function(tour){
     if ($scope.currentPlace){

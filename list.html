@@ -7,7 +7,7 @@
       <option value="">--Выберите страну--</option>
     </select>
     <label>место:</label>
-    <select class="form-control" ng-model="currentPlace" ng-options="place.objectId as place.name for place in tourPlaces">
+    <select class="form-control" ng-model="currentPlace" ng-options="place.objectId as place.name for place in tourPlaces | filter: filterByCountry">
       <option value="">--Выберите место--</option>
     </select>
   </div>
