@@ -17,12 +17,17 @@
   <select class="form-control" ng-model="newTour.countryId.objectId" ng-options="country.objectId as country.name for country in tourCountries">
   </select>
 </div>
-<div class="form-group col-md-4">
+<div class="form-group col-md-3">
   <label>Место:</label>
   <select class="form-control" ng-model="newTour.placeId.objectId" ng-options="place.objectId as place.name for place in tourPlaces">
   </select>
 </div>
-<div class="form-group col-md-4">
+<div class="form-group col-md-3">
+  <label>Отель:</label>
+  <select class="form-control" ng-model="newTour.hotelId.objectId" ng-options="hotel.objectId as hotel.name for hotel in tourHotels">
+  </select>
+</div>
+<div class="form-group col-md-3">
   <label>Продолжительность:</label>
   <input type="number" class="form-control" ng-model="newTour.length" />
 </div>
@@ -50,6 +55,7 @@
       <th>Название</th>
       <th>Страна</th>
       <th>Место</th>
+      <th>Отель</th>
       <th>Продолжительность</th>
       <th>Описание</th>
       <th>Цена</th>
@@ -59,13 +65,14 @@
     <tr ng-hide="tour.showEditForm">
       <td><a ng-href="/admin/tours/{{tour.objectId}}">{{tour.title}}</a></td>
       <td>{{tourCountry(tour)}}</td>
-      <td>{{tourPlace(tour)}}</td>
+      <td>{{tourPlace(tour)}}</td> 
+      <td>{{tourHotel(tour)}}</td>
       <td>{{tour.length}}</td>
       <td>{{tour.text}}</td>
       <td>{{tour.price}}</td>
     </tr>
     <tr ng-hide="tour.showEditForm">
-      <td colspan="4">
+      <td colspan="7">
         <button type="button" class="btn btn-xs btn-info" ng-click="edit(tour)">Редактировать</button>
         <button type="button" class="btn btn-xs btn-danger" ng-click="delete(tour)">Удалить</button>
       </td>
@@ -86,6 +93,10 @@
           </select>
         </td>
         <td>
+          <select class="form-control" ng-model="tour.hotel.objectId" ng-options="hotel.objectId as hotel.name for hotel in tourHotels">
+          </select>
+        </td>
+        <td>
           <div class="form-group">
             <input type="number" class="form-control" ng-model="tour.length" />
           </div>
@@ -100,6 +111,7 @@
             <input type="text" class="form-control" ng-model="tour.price" />
           </div>
         </td>
+        </form>
         <td>
           <button type="button" class="btn btn-xs btn-info" ng-click="update(tour)">Сохранить</button>
           <button type="button" class="btn btn-xs btn-default" ng-click="cancelEdit(tour)">Отмена</button>

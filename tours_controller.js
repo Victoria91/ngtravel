@@ -13,9 +13,15 @@ angular.module('Travel').controller('ToursController', function($scope, $locatio
                         {objectId: '@objectId'},
                         {query: {isArray: true, transformResponse: parseResults}});
 
+  var Hotel = $resource('https://api.parse.com/1/classes/Hotel/:objectId',
+                        {objectId: '@objectId'},
+                        {query: {isArray: true, transformResponse: parseResults}});
+
+
   $scope.tourCountries = Country.query();
-  $scope.tours = Tour.query();
   $scope.tourPlaces = Place.query();
+  $scope.tourHotels = Hotel.query();
+  $scope.tours = Tour.query();
 
   $scope.randomTour = function(){
     $location.path('/admin/tours/sochi');
@@ -40,6 +46,17 @@ angular.module('Travel').controller('ToursController', function($scope, $locatio
         return place.objectId == tour.placeId.objectId;
       });
       return place.name;
+    }
+  };
+
+  $scope.tourHotel = function(tour){
+    if (!tour.hotelId) {
+      return ''
+    } else {
+      hotel = $scope.tourHotels.find(function(hotel){
+        return hotel.objectId == tour.hotelId.objectId;
+      });
+      return hotel.name + ',' + hotel.stars + '*';
     }
   };
 
