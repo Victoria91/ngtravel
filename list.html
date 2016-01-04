@@ -7,7 +7,7 @@
       <option value="">--Выберите страну--</option>
     </select>
     <label>место:</label>
-    <select class="form-control" ng-model="currentPlace" ng-options="place.objectId as place.name for place in tourPlaces">
+    <select class="form-control" ng-model="currentPlace" ng-options="place.objectId as place.name for place in tourPlaces | filter: filterByCountry">
       <option value="">--Выберите место--</option>
     </select>
   </div>
@@ -20,6 +20,7 @@
       <th>Название</th>
       <th>Страна</th>
       <th>Место</th>
+      <th>Отель</th>
       <th>Продолжительность</th>
       <th>Описание</th>
       <th>Цена</th>
@@ -30,6 +31,7 @@
       <td><a ng-href="/admin/tours/{{tour.slug}}">{{tour.title}}</a></td>
       <td>{{tourCountry(tour)}}</td>
       <td>{{tourPlace(tour)}}</td>
+      <td>{{tourHotel(tour)}}</td>
       <td>{{tour.length}}</td>
       <td>{{tour.text}}</td>
       <td>{{tour.price}}</td>

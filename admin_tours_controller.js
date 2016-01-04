@@ -16,15 +16,22 @@ angular.module('Travel').controller('AdminToursController', function($scope, $lo
                         {objectId: '@objectId'},
                         {query: {isArray: true, transformResponse: parseResults}});
 
+  var Hotel = $resource('https://api.parse.com/1/classes/Hotel/:objectId',
+                        {objectId: '@objectId'},
+                        {query: {isArray: true, transformResponse: parseResults}});
+
+
   $scope.tourCountries = Country.query();
   $scope.tourPlaces = Place.query();
+  $scope.tourHotels = Hotel.query();
   $scope.tours = Tour.query();
 
-  $scope.newTour = { title: null, country_id: null, text: null, price: null, length: 7 };
+  $scope.newTour = { title: null, countryId: null, text: null, price: null, length: 7 };
 
   $scope.addTour = function(){
     var tourToServer = new Tour($scope.newTour);
-    tourToServer.country_id = angular.extend($scope.newTour.country_id, { __type: "Pointer", className: "Country"});
+    tourToServer.countryId = angular.extend($scope.newTour.countryId, { __type: "Pointer", className: "Country"});
+    tourToServer.placeId = angular.extend($scope.newTour.placeId, { __type: "Pointer", className: "Place"});
     tourToServer.placeId = angular.extend($scope.newTour.placeId, { __type: "Pointer", className: "Place"});
     tourToServer.$save().then(
       function(tour){
@@ -62,11 +69,11 @@ angular.module('Travel').controller('AdminToursController', function($scope, $lo
   };
 
   $scope.tourCountry = function(tour){
-    if (!tour.country_id) {
+    if (!tour.countryId) {
       return ''
     } else {
       country = $scope.tourCountries.find(function(country){
-        return country.objectId == tour.country_id.objectId;
+        return country.objectId == tour.countryId.objectId;
       });
       return country.name;
     }
@@ -80,6 +87,17 @@ angular.module('Travel').controller('AdminToursController', function($scope, $lo
         return place.objectId == tour.placeId.objectId;
       });
       return place.name;
+    }
+  };
+
+  $scope.tourHotel = function(tour){
+    if (!tour.hotelId) {
+      return ''
+    } else {
+      hotel = $scope.tourHotels.find(function(hotel){
+        return hotel.objectId == tour.hotelId.objectId;
+      });
+      return hotel.name + ',' + hotel.stars + '*';
     }
   };
 

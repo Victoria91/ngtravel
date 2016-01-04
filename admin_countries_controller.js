@@ -22,6 +22,7 @@ angular.module('Travel').controller('AdminCountriesController', function($scope,
   };
 
   $scope.update = function(country) {
+  	country.edit = false;
     Country.update(country).$promise.then(function(){
       $scope.hideEditForm(country);
     });

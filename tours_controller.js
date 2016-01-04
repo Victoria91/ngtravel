@@ -13,20 +13,26 @@ angular.module('Travel').controller('ToursController', function($scope, $locatio
                         {objectId: '@objectId'},
                         {query: {isArray: true, transformResponse: parseResults}});
 
+  var Hotel = $resource('https://api.parse.com/1/classes/Hotel/:objectId',
+                        {objectId: '@objectId'},
+                        {query: {isArray: true, transformResponse: parseResults}});
+
+
   $scope.tourCountries = Country.query();
-  $scope.tours = Tour.query();
   $scope.tourPlaces = Place.query();
+  $scope.tourHotels = Hotel.query();
+  $scope.tours = Tour.query();
 
   $scope.randomTour = function(){
     $location.path('/admin/tours/sochi');
   };
 
   $scope.tourCountry = function(tour){
-    if (!tour.country_id) {
+    if (!tour.countryId) {
       return ''
     } else {
       country = $scope.tourCountries.find(function(country){
-        return country.objectId == tour.country_id.objectId;
+        return country.objectId == tour.countryId.objectId;
       });
       return country.name;
     }
@@ -43,13 +49,24 @@ angular.module('Travel').controller('ToursController', function($scope, $locatio
     }
   };
 
-  $scope.filterByCountry = function(tour){
+  $scope.tourHotel = function(tour){
+    if (!tour.hotelId) {
+      return ''
+    } else {
+      hotel = $scope.tourHotels.find(function(hotel){
+        return hotel.objectId == tour.hotelId.objectId;
+      });
+      return hotel.name + ',' + hotel.stars + '*';
+    }
+  };
+
+  $scope.filterByCountry = function(object){
     if ($scope.currentCountry){
-      return tour.country_id && tour.country_id.objectId == $scope.currentCountry
+      return object.countryId && object.countryId.objectId == $scope.currentCountry
     } else {
       return true;
     }
-  }
+  };
 
   $scope.filterByPlace = function(tour){
     if ($scope.currentPlace){
