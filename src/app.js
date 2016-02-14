@@ -4,12 +4,7 @@ angular.module('Travel', ['ngRoute', 'ngResource'])
 	.when('/',{
 		templateUrl: 'admin_list.html',
 		controller: 'AdminToursController',
-    publicAccess: true,
-    resolve: {
-      currentUser: function(){
-        return {name: 'Alex'};
-      }
-    }
+    publicAccess: true
 	})
   .when('/admin/tours/:id',{
     templateUrl: 'item.html',
